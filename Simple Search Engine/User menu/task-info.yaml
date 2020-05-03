@@ -239,6 +239,35 @@ files:
     }
 
   learner_created: false
+- name: src/search/extensions/IO.kt
+  visible: true
+  text: |-
+    package search.extensions
+
+    operator fun String?.unaryPlus() = println(this)
+
+    operator fun String?.unaryMinus() = print(this)
+  learner_created: true
+- name: src/search/Main.kt
+  visible: true
+  text: "package search\n\nimport search.extensions.unaryPlus\nimport java.util.Scanner\n\
+    \nfun main() {\n    val scanner = Scanner(System.`in`)\n\n    +\"Enter the number\
+    \ of people:\"\n    val count = scanner.nextLine().toInt()\n\n    +\"Enter all\
+    \ people:\"\n\n    val haystack = Array(count) { scanner.nextLine() }\n\n    +\"\
+    \"\"\n        \n        Enter the number of search queries:\n    \"\"\".trimIndent()\n\
+    \    val queries = scanner.nextLine().toInt()\n\n    repeat(queries) {\n     \
+    \   +\"\"\"\n\n            Enter data to search people:\n        \"\"\".trimIndent()\n\
+    \        val needle = scanner.nextLine()\n\n        val result = haystack.filter\
+    \ { it.contains(needle, true) }\n\n        +if (result.isEmpty()) {\n        \
+    \    \"No matching people found.\"\n        } else {\n            \"Found people:\\\
+    n${result.joinToString(\"\\n\")}\"\n        }\n    }\n\n\n}"
+  learner_created: true
+- name: src/search/SimpleSearchEngine.kt
+  visible: true
+  learner_created: true
+- name: src/search/extensions/states/State.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/89/stages/496/implement
 status: Unchecked
 record: -1
