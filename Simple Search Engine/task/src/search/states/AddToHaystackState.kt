@@ -13,11 +13,11 @@ class AddToHaystackState(engine: SimpleSearchEngine, private vararg val items: S
             val tokens = s.split("\\s+".toRegex())
 
             tokens.forEach {
-                val list = engine.invertedIndex[it]?.toMutableList() ?: mutableListOf()
+                val list = engine.invertedIndex[it.toLowerCase()]?.toMutableList() ?: mutableListOf()
 
                 list.add(startIndex + index)
 
-                engine.invertedIndex[it] = list
+                engine.invertedIndex[it.toLowerCase()] = list
             }
         }
     }

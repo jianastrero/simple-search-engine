@@ -1,6 +1,7 @@
 package search
 
 import search.extensions.unaryPlus
+import search.states.FindState
 import java.io.File
 import java.util.Scanner
 
@@ -38,8 +39,13 @@ fun main(vararg args: String) {
         +""
         when (action) {
             1 -> {
+                +"Select a matching strategy: ALL, ANY, NONE"
+                val strategy = scanner.nextLine()
+
                 +"Enter a name or email to search all suitable people."
-                engine find scanner.nextLine().split("\\s+".toRegex()).toTypedArray()
+                engine using
+                    FindState.Strategy.get(strategy) find
+                    scanner.nextLine().split("\\s+".toRegex()).toTypedArray()
             }
             2 -> {
                 +engine
@@ -53,5 +59,5 @@ fun main(vararg args: String) {
         }
     }
 
-    +"\nBye!"
+    +"Bye!"
 }

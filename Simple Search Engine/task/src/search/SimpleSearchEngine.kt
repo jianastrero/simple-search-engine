@@ -38,6 +38,10 @@ class SimpleSearchEngine {
 
     operator fun plusAssign(items: List<String>) = addToHaystack(*items.toTypedArray())
 
+    infix fun using(strategy: FindState.Strategy) = FindState.Builder(this).apply {
+        this.strategy = strategy
+    }
+
     infix fun find(needle: String) {
         state = FindState(this, needle)
     }
