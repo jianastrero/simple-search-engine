@@ -1,17 +1,27 @@
 package search
 
 import search.extensions.unaryPlus
+import java.io.File
 import java.util.Scanner
 
-fun main() {
+fun main(vararg args: String) {
+    if (args.size != 2 || args[0] != "--data") {
+        +"Invalid arguments"
+        return
+    }
+
+    val file = File(args[1])
+    if (!file.exists() || file.isDirectory || !file.canRead()) {
+        +"Invalid file"
+        return
+    }
+
     val scanner = Scanner(System.`in`)
     val engine = SimpleSearchEngine()
 
-    +"Enter the number of people:"
-    val count = scanner.nextLine().toInt()
-
-    +"Enter all people:"
-    engine += Array(count) { scanner.nextLine() }
+    file.forEachLine {
+        engine += it
+    }
 
     mainLoop@while (true) {
         +"""

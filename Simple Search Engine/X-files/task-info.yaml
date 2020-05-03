@@ -279,6 +279,162 @@ files:
     }
 
   learner_created: false
+- name: src/search/states/IdleState.kt
+  visible: true
+  text: |-
+    package search.states
+
+    import search.SimpleSearchEngine
+
+    class IdleState(engine: SimpleSearchEngine) : State(engine) {
+
+        override fun run() {
+            // Do nothing
+        }
+    }
+  learner_created: true
+- name: src/search/extensions/IO.kt
+  visible: true
+  text: |-
+    package search.extensions
+
+    operator fun String?.unaryPlus() = println(this)
+
+    operator fun String?.unaryMinus() = print(this)
+  learner_created: true
+- name: src/search/states/State.kt
+  visible: true
+  text: |-
+    package search.states
+
+    import search.SimpleSearchEngine
+
+    abstract class State(protected val engine: SimpleSearchEngine) {
+
+        abstract fun run()
+    }
+  learner_created: true
+- name: src/search/Main.kt
+  visible: true
+  text: "package search\n\nimport search.extensions.unaryPlus\nimport java.util.Scanner\n\
+    \nfun main() {\n    val scanner = Scanner(System.`in`)\n    val engine = SimpleSearchEngine()\n\
+    \n    +\"Enter the number of people:\"\n    val count = scanner.nextLine().toInt()\n\
+    \n    +\"Enter all people:\"\n    engine += Array(count) { scanner.nextLine()\
+    \ }\n\n    mainLoop@while (true) {\n        +\"\"\"\n            \n          \
+    \  === Menu ===\n            1. Find a person\n            2. Print all people\n\
+    \            0. Exit\n        \"\"\".trimIndent()\n\n        val action = scanner.nextLine().toInt()\n\
+    \n        +\"\"\n        when (action) {\n            1 -> {\n               \
+    \ +\"Enter a name or email to search all suitable people.\"\n                engine\
+    \ / scanner.nextLine()\n            }\n            2 -> {\n                +engine\n\
+    \            }\n            0 -> {\n                break@mainLoop\n         \
+    \   }\n            else -> {\n                +\"Incorrect option! Try again.\"\
+    \n            }\n        }\n    }\n\n    +\"\\nBye!\"\n}"
+  learner_created: true
+- name: src/search/SimpleSearchEngine.kt
+  visible: true
+  text: |-
+    package search
+
+    import search.states.AddToHaystackState
+    import search.states.FindState
+    import search.states.IdleState
+    import search.states.PrintAllState
+    import search.states.State
+
+    class SimpleSearchEngine {
+
+        private lateinit var _state: State
+
+        val haystack = mutableListOf<String>()
+
+        var state: State
+            get() = _state
+            set(value) {
+                _state = value
+                _state.run()
+            }
+
+        init {
+            idle()
+        }
+
+        fun idle() {
+            state = IdleState(this)
+        }
+
+        fun addToHaystack(vararg items: String) {
+            state = AddToHaystackState(this, *items)
+        }
+
+        operator fun plusAssign(item: String) = addToHaystack(item)
+
+        operator fun plusAssign(items: Array<String>) = addToHaystack(*items)
+
+        operator fun plusAssign(items: List<String>) = addToHaystack(*items.toTypedArray())
+
+        fun find(needle: String) {
+            state = FindState(this, needle)
+        }
+
+        operator fun div(needle: String) = find(needle)
+
+        fun printAll() {
+            state = PrintAllState(this)
+        }
+
+        operator fun unaryPlus() = printAll()
+    }
+  learner_created: true
+- name: src/search/states/AddToHaystackState.kt
+  visible: true
+  text: |-
+    package search.states
+
+    import search.SimpleSearchEngine
+
+    class AddToHaystackState(engine: SimpleSearchEngine, private vararg val items: String) : State(engine) {
+
+        override fun run() {
+            engine.haystack.addAll(items)
+        }
+    }
+  learner_created: true
+- name: src/search/states/FindState.kt
+  visible: true
+  text: |-
+    package search.states
+
+    import search.SimpleSearchEngine
+    import search.extensions.unaryPlus
+
+    class FindState(engine: SimpleSearchEngine, private val needle: String) : State(engine) {
+
+        override fun run() {
+            val result = engine.haystack.filter { it.contains(needle, true) }
+
+            +if (result.isEmpty()) {
+                "No matching people found."
+            } else {
+                "Found people:\n${ result.joinToString("\n") }"
+            }
+        }
+    }
+  learner_created: true
+- name: src/search/states/PrintAllState.kt
+  visible: true
+  text: |-
+    package search.states
+
+    import search.SimpleSearchEngine
+    import search.extensions.unaryPlus
+
+    class PrintAllState(engine: SimpleSearchEngine) : State(engine) {
+
+        override fun run() {
+            +"=== List of people ===\n${ engine.haystack.joinToString("\n") }"
+        }
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/89/stages/497/implement
-status: Unchecked
+status: Solved
 record: -1
