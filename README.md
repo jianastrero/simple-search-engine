@@ -1,5 +1,5 @@
-# Coffee Machine
-https://hyperskill.org/projects/67
+# Simple Search Engine
+https://hyperskill.org/projects/89
 
 ### What I've learned
 The topics are advanced for sure but the project is not hard. But, everything here is greatly stated and its all easy to learn.
