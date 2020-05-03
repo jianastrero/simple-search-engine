@@ -148,6 +148,30 @@ files:
         }
     }
   learner_created: false
+- name: src/search/Main.kt
+  visible: true
+  text: |
+    package search
+
+    import java.util.Scanner
+
+    fun main() {
+        val scanner = Scanner(System.`in`)
+
+        val haystack = scanner.nextLine().split("\\s+".toRegex())
+        val needle = scanner.nextLine()
+
+        print(
+            if (haystack.indexOf(needle) > -1)
+                haystack.indexOf(needle) + 1
+            else
+                "Not found"
+        )
+    }
+  learner_created: true
+- name: src/search/extensions/IO.kt
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/89/stages/495/implement
-status: Unchecked
+status: Solved
 record: -1
