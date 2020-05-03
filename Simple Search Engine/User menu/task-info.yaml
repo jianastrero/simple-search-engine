@@ -265,9 +265,21 @@ files:
 - name: src/search/SimpleSearchEngine.kt
   visible: true
   learner_created: true
-- name: src/search/extensions/states/State.kt
+- name: src/search/states/State.kt
+  visible: true
+  learner_created: true
+- name: src/search/states/IdleState.kt
+  visible: true
+  learner_created: true
+- name: src/search/states/AddToHaystackState.kt
+  visible: true
+  learner_created: true
+- name: src/search/states/FindState.kt
+  visible: true
+  learner_created: true
+- name: src/search/states/PrintAllState.kt
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/projects/89/stages/496/implement
-status: Unchecked
+status: Solved
 record: -1
