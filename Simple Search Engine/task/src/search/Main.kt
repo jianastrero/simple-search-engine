@@ -31,6 +31,7 @@ fun main(vararg args: String) {
             2. Print all people
             0. Exit
         """.trimIndent()
+        engine.idle()
 
         val action = scanner.nextLine().toInt()
 
@@ -38,7 +39,7 @@ fun main(vararg args: String) {
         when (action) {
             1 -> {
                 +"Enter a name or email to search all suitable people."
-                engine / scanner.nextLine()
+                engine find scanner.nextLine().split("\\s+".toRegex()).toTypedArray()
             }
             2 -> {
                 +engine

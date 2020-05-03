@@ -11,6 +11,7 @@ class SimpleSearchEngine {
     private lateinit var _state: State
 
     val haystack = mutableListOf<String>()
+    val invertedIndex = mutableMapOf<String, List<Int>>()
 
     var state: State
         get() = _state
@@ -37,8 +38,12 @@ class SimpleSearchEngine {
 
     operator fun plusAssign(items: List<String>) = addToHaystack(*items.toTypedArray())
 
-    fun find(needle: String) {
+    infix fun find(needle: String) {
         state = FindState(this, needle)
+    }
+
+    infix fun find(needles: Array<String>) {
+        state = FindState(this, *needles)
     }
 
     operator fun div(needle: String) = find(needle)
